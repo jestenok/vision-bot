@@ -1,0 +1,11 @@
+__pycache__/
+*.pyc
+.idea/
+.claude/
+images/
+
+# C++ build
+cpp/build/
+build/
+*.obj
+*.exe
