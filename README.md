@@ -15,7 +15,6 @@
 ## Сборка
 
 ```
-cd cpp
 cmake -B build -S . -DCMAKE_TOOLCHAIN_FILE=<vcpkg>/scripts/buildsystems/vcpkg.cmake
 cmake --build build --config Release
 ```

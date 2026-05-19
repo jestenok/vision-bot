@@ -14,7 +14,7 @@
 #include "profiles/profile.hpp"
 
 namespace {
-constexpr const char* kDefaultProfile = "nte-fishing";
+constexpr const char* kDefaultProfile = "reaction-test";
 }
 
 int main(int argc, char** argv) {

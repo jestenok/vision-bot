@@ -1,0 +1,8 @@
+{
+  "name": "vision-bot",
+  "version": "0.1.0",
+  "dependencies": [
+    "opencv4"
+  ],
+  "builtin-baseline": "b4097dd14b05a86289e1eaa20387e09d16c7bb36"
+}

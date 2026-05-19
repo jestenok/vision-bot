@@ -17,6 +17,7 @@ add_executable(vision_bot
     src/core/humanizer.cpp
     src/core/watcher.cpp
     src/core/debug_view.cpp
+    src/core/overlay_view.cpp
     src/core/runner.cpp
     src/mechanics/slider.cpp
     src/profiles/profiles.cpp

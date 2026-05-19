@@ -5,6 +5,7 @@
 
 #include "core/debug_view.hpp"
 #include "core/module.hpp"
+#include "core/overlay_view.hpp"
 #include "profiles/profile.hpp"
 
 namespace vb {
@@ -21,7 +22,8 @@ private:
 
     GameProfile profile_;
     std::vector<std::unique_ptr<IModule>> modules_;
-    std::optional<DebugView> debug_view_;
+    std::optional<DebugView> debug_view_;       // режим Window
+    std::optional<OverlayView> overlay_view_;   // режим Overlay
     bool running_ = false;
     bool quit_ = false;
 };

@@ -7,5 +7,10 @@ images/
 # C++ build
 cpp/build/
 build/
+cmake-build-*/
 *.obj
 *.exe
+
+# Claude Code working dirs
+journals/
+memory/

@@ -25,8 +25,11 @@ double now_seconds() {
 GameBot::GameBot(GameProfile profile) : profile_(std::move(profile)) {
     for (auto& factory : profile_.modules)
         modules_.push_back(factory());
-    if (profile_.debug_view)
-        debug_view_.emplace();
+    switch (profile_.debug_view) {
+        case DebugViewMode::Window:  debug_view_.emplace();   break;
+        case DebugViewMode::Overlay: overlay_view_.emplace(); break;
+        case DebugViewMode::Off:                              break;
+    }
 }
 
 void GameBot::render_debug() {
@@ -35,7 +38,10 @@ void GameBot::render_debug() {
         const DebugBlock b = m->debug_block();
         blocks.emplace_back(m->name(), b.rect, b.detected);
     }
-    debug_view_->render(blocks);
+    if (debug_view_)
+        debug_view_->render(blocks);
+    if (overlay_view_)
+        overlay_view_->render(blocks);
 }
 
 void GameBot::run() {
@@ -46,8 +52,12 @@ void GameBot::run() {
                 profile_.name.c_str(), modules_.size());
     std::printf("[bot] %s = start/pause, %s = quit\n",
                 profile_.hotkey_toggle.c_str(), profile_.hotkey_quit.c_str());
-    if (debug_view_)
-        std::printf("[bot] debug window ON (separate window, not an overlay)\n");
+    const bool debug_on = profile_.debug_view != DebugViewMode::Off;
+    if (debug_on)
+        std::printf("[bot] debug view ON (%s)\n",
+                    profile_.debug_view == DebugViewMode::Overlay
+                        ? "overlay over the game"
+                        : "separate window");
 
     const double frame_dt = 1.0 / (profile_.fps > 0 ? profile_.fps : 1);
     bool toggle_prev = false, quit_prev = false;
@@ -77,7 +87,7 @@ void GameBot::run() {
                 if (msg)
                     std::printf("[%s] %s\n", m->name().c_str(), msg->c_str());
             }
-            if (debug_view_)
+            if (debug_on)
                 render_debug();
         } else {
             std::this_thread::sleep_for(std::chrono::milliseconds(50));
@@ -92,6 +102,8 @@ void GameBot::run() {
         m->on_stop();
     if (debug_view_)
         debug_view_->close();
+    if (overlay_view_)
+        overlay_view_->close();
     std::printf("[bot] quit\n");
 }
 

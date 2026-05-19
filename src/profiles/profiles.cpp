@@ -66,16 +66,17 @@ GameProfile profile_nte_fishing() {
 GameProfile profile_reaction_test() {
     GameProfile p;
     p.name = "reaction-test";
-    p.fps = 60;
+    p.fps = 360;
+    p.debug_view = DebugViewMode::Overlay;
 
     p.modules.push_back([] {
         WatcherConfig c;
         c.name = "reaction";
-        c.region = {0.283, 0.348, 0.711, 0.537};
+        c.region = {0.290, 0.350, 0.300, 0.360};
         c.hsv = {{35, 60, 60, 90, 255, 255}};  // ярко-зелёный
         c.action = std::make_unique<MouseClick>("left");
         c.min_fill = 0.5;
-        c.delay_s = {0.12, 0.22};
+        c.delay_s = {0.0, 0.0};
         c.debug = true;
         return std::make_unique<RegionWatcher>(std::move(c));
     });
@@ -89,7 +90,7 @@ GameProfile profile_cigame() {
     p.fps = 60;
     p.hotkey_toggle = "f3";
     p.hotkey_quit = "f4";
-    p.debug_view = true;
+    p.debug_view = DebugViewMode::Overlay;
 
     p.modules.push_back([] {
         WatcherConfig c;
